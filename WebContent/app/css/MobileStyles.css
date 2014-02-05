@@ -1,0 +1,44 @@
+.mobile-list-item {
+	
+}
+
+.sapMLabel {
+	vertical-align: middle;
+}
+
+.bla {
+	min-width: 0px;
+	width: 0px;
+}
+
+.buttonRow {
+	text-align: right;
+}
+
+button.sapMBtn {
+	background-color: transparent;
+	border: 0px;
+}
+
+.label {
+	color: green;
+	padding-top: 2px;
+}
+
+.text {
+	padding-left: 5px;
+	margin-left: 2px
+}
+
+.labelBold {
+	font-weight: bold;
+	padding-top: 15px;
+}
+
+.hbox {
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+	color: green;
+	padding-right: 5px;
+}
