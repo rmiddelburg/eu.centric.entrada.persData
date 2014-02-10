@@ -43,32 +43,20 @@ sap.ui
 				jQuery.sap.log.info("navBack");
 		    },
 
-		    // This method is called for multiple purpose:
-		    // 1. When navigate to a new page: history state is added
-		    // and page(view) is instantiated when it's loaded for the
-		    // first time
-		    // 2. When hardware back button is tapped.
 		    navTo : function(sChannelId, sEventId, oData) {
 				var App = this.getView().App,
 							   sViewId = oData.viewId, 
 							   oDataObject = oData.data, 
 							   sNavType = oData.navType, 
-							   oView;
-
-				// check param
+							   oView;				
+				
 				if (!sViewId) {
 				    jQuery.sap.log.error(oBundle.getText("LOGGER_ERROR_PARAM_ID2",[sViewId]));
 				    return;
 				}
-				var bMaster = (sViewId.indexOf("app.persData.") !== -1);
-//				var bMaster = (sViewId.indexOf("app.persData."));
+				var sView = (sViewId.indexOf("app.persData.") !== -1);
 				if (sNavType === jQuery.sap.history.NavType.Back) {
-				    if (bMaster) {
-						App.backMaster({back : false});
-				    } else {
-				    	App.backMaster({back : false});
-						//App.backDetail();
-				    }
+						App.back({back : true});    
 				} else {
 				    oView = sap.ui.getCore().byId(sViewId);
 				    if (!oView) {
@@ -76,8 +64,8 @@ sap.ui
 						jQuery.sap.log
 							.info(oBundle.getText("LOGGER_ERROR_LOADING_VIEW",[sViewId]));
 						oView = sap.ui.jsview(sViewId, sViewId);
-						(bMaster) ? App.addPage(oView) : App.addPage(oView);
-				    } else if (!bMaster) {
+						App.addPage(oView);
+				    } else if (!sView) {
 						// in case the navigation is from list to
 						// details the details page is already loaded so
 						// the navigation will be failed. therefore we
@@ -85,17 +73,16 @@ sap.ui
 						// refresh the details page data.
 						oView.onBeforeShow(oData);
 			    	}
-				    (bMaster) ? App.to(sViewId, oDataObject)
-				    : App.to(sViewId, oDataObject);
+                   App.to(sViewId, oDataObject);
 				}	
 
 				// write history
-				if (!sNavType && (bMaster || jQuery.device.is.phone)) {
+				if (!sNavType && (sView || jQuery.device.is.phone)) {
 					jQuery.sap.history.addHistory("page", {
 						id : sViewId
 						}, false);
 				}
 
 				// log
-				jQuery.sap.log.info(oBundle.getText("LOGGER_INFO_LOADING_VIEW",[sViewId,(!sNavType && bMaster),sNavType]));
+				jQuery.sap.log.info(oBundle.getText("LOGGER_INFO_LOADING_VIEW",[sViewId,(!sNavType && sView),sNavType]));
 		    }		});

@@ -13,7 +13,6 @@ sap.ui.jsview("app.persData.selection", {
 
 	
 	onBeforeShow : function(oEvent) {
-		this.getController().onBeforeShow(oEvent.data);
     },
     
 	/**
@@ -26,10 +25,8 @@ sap.ui.jsview("app.persData.selection", {
 	createContent : function(oController) {
 		jQuery.sap.require("sap.m.MessageToast");
 		jQuery.sap.require("sap.m.MessageBox");
-
-		jQuery.sap.require("sap.m.MessageToast");
 		jQuery.sap.require("sap.ui.core.format.DateFormat");
-
+		
 		var oLayout2 = new sap.ui.layout.form.ResponsiveGridLayout("L2", {
 			labelSpanL: 3,
 			labelSpanM: 1,
@@ -46,15 +43,15 @@ sap.ui.jsview("app.persData.selection", {
 		var oh7 = new sap.m.ObjectHeader("oh7", {
 			title : "Medewerker",
 			titleActive : true,
-//			titlePress : oh7PressHandler,
+			titlePress : oController.onPersonalList,
 //			number : "3,00",
 //			numberUnit : "EUR",
 //			numberState : sap.ui.core.ValueState.Success,
 			icon : serviceUrl + "/PersoonPhotoSet('00000000')/$value", tooltip: "Title tooltip",
-//			iconActive : true,
-//			iconPress : oController.onPersonalData,
-			markFlagged : false,
-			showMarkers : false
+			iconActive : true,
+			iconPress : oController.onPersonalList,
+//			markFlagged : false,
+//			showMarkers : false
 		});
 		
 		var oForm2 = new sap.ui.layout.form.Form("F2",{
@@ -63,14 +60,15 @@ sap.ui.jsview("app.persData.selection", {
 			formContainers: [			new sap.ui.layout.form.FormContainer("F2C1",{
 //				title: "Person data",
 				formElements: [
-								new sap.ui.layout.form.FormElement({
-									fields: [new sap.ui.core.Icon({
+								new sap.ui.layout.form.FormElement("test1",{
+									fields: [new sap.ui.core.Icon("icon1",{
 									      src: "sap-icon://employee",
 									      size: (jQuery.device.is.phone) ? "4em" : "5.5em",
 									      color: "#1C4C98",
 									      decorative: false,
 									      layoutData: new sap.m.FlexItemData({growFactor: 1}),
 									      press: oController.onPersonalList
+									 //     press:fnPress,
 									    }).addStyleClass("icon")
 									]
 								}),
@@ -79,30 +77,30 @@ sap.ui.jsview("app.persData.selection", {
 									    new sap.m.Text({text: oBundle.getText("PERSONAL_LIST_HEADER"), textAlign: sap.ui.core.TextAlign.Center})
 									]
 								}),
-							]
+							],						
 			}),
 			new sap.ui.layout.form.FormContainer("F2C2",{
 				formElements: [
-								new sap.ui.layout.form.FormElement({
-									fields: [new sap.ui.core.Icon({
+								new sap.ui.layout.form.FormElement("test2",{
+									fields: [new sap.ui.core.Icon("icon2",{
 									      src: "sap-icon://addresses",
 									      size: (jQuery.device.is.phone) ? "4em" : "5.5em",
 									      color: "#1C4C98",
 									      decorative: false,
 									      layoutData: new sap.m.FlexItemData({growFactor: 1}),
 									      press: oController.onAddressList
+							//		      press:fnPress,
 									    }).addStyleClass("icon"),
 									]
 								}),
 								new sap.ui.layout.form.FormElement({
 									fields: [
-
 									    new sap.m.Text({text: oBundle.getText("ADDRESS_LIST_HEADER"), textAlign: sap.ui.core.TextAlign.Center})
 									]
 								}),
 							]
 			}),
-						new sap.ui.layout.form.FormContainer("F2C3",{
+	/*					new sap.ui.layout.form.FormContainer("F2C3",{
 				formElements: [
 								new sap.ui.layout.form.FormElement({
 									fields: [new sap.ui.core.Icon({
@@ -186,7 +184,7 @@ sap.ui.jsview("app.persData.selection", {
 									]
 								}),
 							]
-			}),
+			}),*/
 	]
 		});
 		
@@ -203,7 +201,10 @@ sap.ui.jsview("app.persData.selection", {
 				icon : "sap-icon://log",
 				press : oController.onLogoutButton
 			}) ],
-			content : [oh7, oForm2]
+			content : [
+			           oh7, 
+			           oForm2
+			           ]
 		});
 
 		// this.page1.setContent(this.oFacet);

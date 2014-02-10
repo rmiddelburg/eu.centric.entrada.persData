@@ -14,7 +14,7 @@ sap.ui.controller("app.persData.selection", {
 	
 onBeforeShow : function(oData) {
         
-        var view = this.getView();
+     
        
     },
 	/**
@@ -102,28 +102,22 @@ onBeforeShow : function(oData) {
 	},
 
 	onPersonalList : function(oEvent) {
-		// var oBindingContext = oEvent.oSource.getBindingContext();
-
 		sap.ui.getCore().getEventBus().publish("nav", "to", {
-
 			viewId : "app.persData.personalList",
-		// data : { bindingContext : oBindingContext
-		// }
-		});
+		    data : {}
+		});	
 	},
 
 	onAddressList : function(oEvent) {
 		// var oBindingContext = oEvent.oSource.getBindingContext();
-
 		sap.ui.getCore().getEventBus().publish("nav", "to", {
-
 			viewId : "app.persData.addressList",
-		// data : { bindingContext : oBindingContext
-		// }
+		 data : {}
 		});
+
 	},
 
-	onFamilyList : function(oEvent) {
+/*	onFamilyList : function(oEvent) {
 		// var oBindingContext = oEvent.oSource.getBindingContext();
 
 		sap.ui.getCore().getEventBus().publish("nav", "to", {
@@ -166,5 +160,5 @@ onBeforeShow : function(oData) {
 		// }
 		});
 	},
-
+*/
 });

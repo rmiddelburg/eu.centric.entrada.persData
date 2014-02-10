@@ -42,13 +42,7 @@ sap.ui.controller("app.persData.assignmentList", {
 },   
 	
 	onNavButtonTap : function() {
-//		sap.ui.getCore().getEventBus().publish("nav", "back");
-		sap.ui.getCore().getEventBus().publish("nav", "to", {
-  			
-  	    	viewId : "app.persData.selection"
-//   	    	data : { bindingContext : oBindingContext 
-//  	    	}
-  		});
+		sap.ui.getCore().getEventBus().publish("nav", "back");
 	},
 	
 	onHomeButton : function() {
@@ -70,8 +64,7 @@ sap.ui.controller("app.persData.assignmentList", {
                       var host = location.host;
                        var url = stype + "//"+ host + "/sap/public/bc/icf/logoff";
                         window.open(url,"_self");
-                }else{
-                  sap.ui.getCore().getEventBus().publish("nav", "back");                                      }
+                }else{                                    }
               }
             );
           },

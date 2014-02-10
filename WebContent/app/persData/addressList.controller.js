@@ -1,39 +1,47 @@
 sap.ui.controller("app.persData.addressList", {
 
 /**
-* Called when a controller is instantiated and its View controls (if available) are already created.
-* Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-* @memberOf app.persData.personalData
-*/
+ * Called when a controller is instantiated and its View controls (if available)
+ * are already created. Can be used to modify the View before it is displayed,
+ * to bind event handlers and do other one-time initialization.
+ * 
+ * @memberOf app.persData.personalData
+ */
 	onInit: function() {
 	  	this.loadContent();
 	},
 
 /**
-* Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-* (NOT before the first rendering! onInit() is used for that one!).
-* @memberOf app.persData.personalData
-*/
-//	onBeforeRendering: function() {
+ * Similar to onAfterRendering, but this hook is invoked before the controller's
+ * View is re-rendered (NOT before the first rendering! onInit() is used for
+ * that one!).
+ * 
+ * @memberOf app.persData.personalData
+ */
+// onBeforeRendering: function() {
 //
-//	},
+// },
 
 /**
-* Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-* This hook is the same one that SAPUI5 controls get after being rendered.
-* @memberOf app.persData.personalData
-*/
-//	onAfterRendering: function() {
+ * Called when the View has been rendered (so its HTML is part of the document).
+ * Post-rendering manipulations of the HTML could be done here. This hook is the
+ * same one that SAPUI5 controls get after being rendered.
+ * 
+ * @memberOf app.persData.personalData
+ */
+// onAfterRendering: function() {
 //
-//	},
+// },
 
 /**
-* Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-* @memberOf app.persData.personalData
-*/
-//	onExit: function() {
+ * Called when the Controller is destroyed. Use this one to free resources and
+ * finalize activities.
+ * 
+ * @memberOf app.persData.personalData
+ */
+// onExit: function() {
 //
-//	}
+// }
 	
 	
     loadContent: function(){
@@ -42,13 +50,7 @@ sap.ui.controller("app.persData.addressList", {
 },   
 	
 	onNavButtonTap : function() {
-//		sap.ui.getCore().getEventBus().publish("nav", "back");
-		sap.ui.getCore().getEventBus().publish("nav", "to", {
-  			
-  	    	viewId : "app.persData.selection"
-//   	    	data : { bindingContext : oBindingContext 
-//  	    	}
-  		});
+        sap.ui.getCore().getEventBus().publish("nav", "back");   
 	},
 	
 	onHomeButton : function() {
@@ -71,7 +73,7 @@ sap.ui.controller("app.persData.addressList", {
                        var url = stype + "//"+ host + "/sap/public/bc/icf/logoff";
                         window.open(url,"_self");
                 }else{
-                  sap.ui.getCore().getEventBus().publish("nav", "back");                                      }
+                                   }
               }
             );
           },
@@ -81,8 +83,9 @@ sap.ui.controller("app.persData.addressList", {
       				"", oBundle.getText("DELETE_ROW_DEL"), [ sap.m.MessageBox.Action.YES,
       						sap.m.MessageBox.Action.NO], function(oAction) {
       					if (oAction == sap.m.MessageBox.Action.YES) {
+      						oController.deleteAddress(oEvent);
       					} else {
-      						sap.ui.getCore().getEventBus().publish("nav", "back");
+
       					}
       				});
       	},
@@ -91,15 +94,76 @@ sap.ui.controller("app.persData.addressList", {
       	
       		 var oBindingContext = oEvent.oSource.getBindingContext();
       		sap.ui.getCore().getEventBus().publish("nav", "to", {
-//      			viewId : "app.persData.addressDetailEdit",
+      			viewId : "app.persData.addressDetailEdit",
       		 data : { bindingContext : oBindingContext
       		 }
       		});
       	},
       	
+      	onAddressNew : function(oEvent) {
+      		sap.ui.getCore().getEventBus().publish("nav", "to", {
+        		viewId : "app.persData.addressDetailNew",
+        		data : ""
+            });
+     	},
+      	
     	onPull : function(oEvent, oController) {
     		oController.loadContent(oController.oBindingContext);
     		this.hide();
     	},
+    	
+    	
+    	deleteAddress: function(oEvent){
+    		BusyDialog.open;
+			var oBindingContext = oEvent.oSource.getBindingContext();
+//type + "//" + host +
+//			var DeleteConnetion = "https://ecd.centriconderwijs.eu/sap/opu/odata/CTR/ENTRADA_PERSOON_ODTA_SRV/" + oBindingContext.getPath();
+			var serviceUrl = "/sap/opu/odata/CTR/ENTRADA_PERSOON_ODTA_SRV/";
+			var deleteConnection = location.protocol + "//"+ location.hostname + serviceUrl + oBindingContext.getPath();
 
+		    
+		    OData.request({  requestUri: deleteConnection ,  
+                   method: "GET",  
+                   headers:  
+                       {       
+  "X-Requested-With": "XMLHttpRequest", 
+   "Content-Type": "application/atom+xml", 
+  "DataServiceVersion": "2.0",          
+  "X-CSRF-Token":"Fetch"  
+                         }                    
+                },
+                function (data, response) 
+                {  
+                       header_xcsrf_token = response.headers['x-csrf-token']; 
+           OData.request 
+           ({ 
+            requestUri: deleteConnection,
+            	method: "DELETE",  
+            	headers: {  
+                    "X-Requested-With": "XMLHttpRequest",                        
+                    "Content-Type": "application/atom+xml", 
+                    "DataServiceVersion": "2.0",  
+                    "X-CSRF-Token": header_xcsrf_token  
+                         } 
+                   },  
+                     function (data, request) 
+                     { 
+                    document.location.reload(true);
+                          BusyDialog.close; 
+                      },  
+                    function (err)  
+                    { 
+                    	  BusyDialog.close;                              
+                     } 
+           ); 
+       }, 
+         function (err)  
+             { 
+    	              BusyDialog.close; 
+    	              var request     = err.request;  
+                      var response = err.response;  
+                      alert("Error in Get -- Request "+request+" Response "+response); 
+             } 
+       ); 
+        }   	
 });

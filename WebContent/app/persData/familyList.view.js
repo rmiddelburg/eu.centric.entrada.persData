@@ -12,7 +12,6 @@ sap.ui.jsview("app.persData.familyList", {
 	},
 	
     onBeforeShow : function(oEvent) {
-		this.getController().onBeforeShow(oEvent.data);
     },
 //    onBeforeShow : function(oEvent) {
 //		this.getController().onBeforeShow(oEvent.data);
@@ -82,13 +81,6 @@ sap.ui.jsview("app.persData.familyList", {
              ]
      });
 
-		var actionSheet = new sap.m.ActionSheet({
-			title : "Choose Your Action",
-			showCancelButton : true,
-			placement : sap.m.PlacementType.Auto,
-			buttons : [ new sap.m.Button({text : oBundle.getText("PARTNER"),}), 
-			            new sap.m.Button({text : oBundle.getText("KIND"),}), ]
-		});
 
 		this.pull = new sap.m.PullToRefresh({
 			description : "",

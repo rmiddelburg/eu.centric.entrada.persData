@@ -79,7 +79,7 @@ sap.ui.controller("app.persData.familyList", {
 								+ "/sap/public/bc/icf/logoff";
 						window.open(url, "_self");
 					} else {
-						sap.ui.getCore().getEventBus().publish("nav", "back");
+
 					}
 				});
 	},
@@ -90,7 +90,6 @@ sap.ui.controller("app.persData.familyList", {
 						sap.m.MessageBox.Action.NO], function(oAction) {
 					if (oAction == sap.m.MessageBox.Action.YES) {
 					} else {
-						sap.ui.getCore().getEventBus().publish("nav", "back");
 					}
 				});
 	},

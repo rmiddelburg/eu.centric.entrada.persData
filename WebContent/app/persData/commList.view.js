@@ -8,6 +8,8 @@ sap.ui.jsview("app.persData.commList", {
 		return "app.persData.commList";
 	},
 
+	onBeforeShow : function(oEvent) {
+    },
 	/** Is initially called once after the Controller has been instantiated. It is the place where the UI is constructed. 
 	* Since the Controller is given to this method, its event handlers can be attached right away. 
 	* @memberOf app.persData.personalData

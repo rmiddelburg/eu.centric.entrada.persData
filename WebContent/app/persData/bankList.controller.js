@@ -42,13 +42,7 @@ sap.ui.controller("app.persData.bankList", {
 },   
 	
 	onNavButtonTap : function() {
-//		sap.ui.getCore().getEventBus().publish("nav", "back");
-		sap.ui.getCore().getEventBus().publish("nav", "to", {
-  			
-  	    	viewId : "app.persData.selection"
-//   	    	data : { bindingContext : oBindingContext 
-//  	    	}
-  		});
+		sap.ui.getCore().getEventBus().publish("nav", "back");
 	},
 	
 	onHomeButton : function() {
@@ -86,7 +80,6 @@ sap.ui.controller("app.persData.bankList", {
       						sap.m.MessageBox.Action.NO], function(oAction) {
       					if (oAction == sap.m.MessageBox.Action.YES) {
       					} else {
-      						sap.ui.getCore().getEventBus().publish("nav", "back");
       					}
       				});
       	},

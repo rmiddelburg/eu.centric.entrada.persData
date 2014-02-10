@@ -9,6 +9,7 @@ sap.ui.controller("app.persData.personalList", {
 	 * @memberOf app.persData.personalData
 	 */
 	onInit : function() {
+		sap.ui.getCore().getEventBus().publish("busyDialog","open");
 		this.loadContent();
 	},
 
@@ -49,20 +50,16 @@ sap.ui.controller("app.persData.personalList", {
 	},
 
 	onNavButtonTap : function() {
-		// sap.ui.getCore().getEventBus().publish("nav", "back");
-		sap.ui.getCore().getEventBus().publish("nav", "to", {
-
-			viewId : "app.persData.selection"
-		// data : { bindingContext : oBindingContext
-		// }
-		});
+		sap.ui.getCore().getEventBus().publish("nav", "back");
 	},
 
 	onHomeButton : function() {
+		sap.ui.getCore().getEventBus().publish("busyDialog","open");
 		var stype = location.protocol;
 		var host = location.host;
 		var url = stype + "//" + host + "/sapui5/index.html";
 		window.open(url, "_self");
+
 	},
 
 	onLogoutButton : function() {
@@ -76,7 +73,7 @@ sap.ui.controller("app.persData.personalList", {
 								+ "/sap/public/bc/icf/logoff";
 						window.open(url, "_self");
 					} else {
-						sap.ui.getCore().getEventBus().publish("nav", "back");
+
 					}
 				});
 	},
@@ -86,7 +83,7 @@ sap.ui.controller("app.persData.personalList", {
 				sap.m.MessageBox.Action.NO ], function(oAction) {
 			if (oAction == sap.m.MessageBox.Action.YES) {
 			} else {
-				sap.ui.getCore().getEventBus().publish("nav", "back");
+
 			}
 		});
 	},

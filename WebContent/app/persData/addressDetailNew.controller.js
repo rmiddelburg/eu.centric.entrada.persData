@@ -1,4 +1,4 @@
-sap.ui.controller("app.persData.personalDetailEdit", {
+sap.ui.controller("app.persData.addressDetailNew", {
 
 /**
 * Called when a controller is instantiated and its View controls (if available) are already created.
@@ -6,42 +6,13 @@ sap.ui.controller("app.persData.personalDetailEdit", {
 * @memberOf app.persData.familyDetailEdit
 */
 	onInit: function() {
-//		var oModelList = new sap.ui.model.odata.ODataModel(getServiceURL(), false, "", "", null,null, null, true);
-//		oModelList.setSizeLimit(250);	
-//		this.getView().titleSelect.setModel(oModelList);
-		this.getView().titleSelect.bindItems("/TitlesSet", this.getView().titleSelectItems); 
-		
-//		this.getView().acadamicSelect.setModel(oModelList);
-		this.getView().acadamicSelect.bindItems("/AcadamicTitlesSet", this.getView().titleSelectItems);  
-		
-//		this.getView().prefixSelect.setModel(oModelList);
-		this.getView().prefixSelect.bindItems("/PrefixSet", this.getView().titleSelectItems); 
-		
-//		this.getView().prefixPartnerSelect.setModel(oModelList);
-		this.getView().prefixPartnerSelect.bindItems("/PrefixSet", this.getView().titleSelectItems); 
-		
-//		this.getView().nationality.setModel(oModelList);
-		this.getView().nationality.bindItems("/CountryCodesSet", this.getView().nationalitySelectItems);
-		
-//		this.getView().nationalitySecond.setModel(oModelList);		
-		this.getView().nationalitySecond.bindItems("/CountryCodesSet", this.getView().nationalitySelectItems);  
-
-//		this.getView().nationalityThird.setModel(oModelList); 
-		this.getView().nationalityThird.bindItems("/CountryCodesSet", this.getView().nationalitySelectItems);	
-		
-//		this.getView().maritalSelect.setModel(oModelList);
-		this.getView().maritalSelect.bindItems("/MaritalListSet", this.getView().maritalSelectItems);
-		
-//		this.getView().languageSelect.setModel(oModelList);
-		this.getView().languageSelect.bindItems("/LanguagesSet", this.getView().languageSelectItems);
-		
-	    // attach handlers for validation errors
-
+		this.getView().countrySelect.bindItems("/CountryCodesSet", this.getView().countrySelectItems);
+		this.getView().addressTypeSelect.bindItems("/AddressSubtypeSet", this.getView().addressTypeSelectItems);
 	},
 	
-	onBeforeShow : function(oData) {
-	    this.getView().bindElement(oData.bindingContext.getPath());
-   	},
+//	onBeforeShow : function(oData) {
+//	    this.getView().bindElement(oData.bindingContext.getPath());
+//   	},
 	
 /**
 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
@@ -74,11 +45,9 @@ sap.ui.controller("app.persData.personalDetailEdit", {
 				"", oBundle.getText("CANCEL"), [ sap.m.MessageBox.Action.YES,
 						sap.m.MessageBox.Action.NO], function(oAction) {
 					if (oAction == sap.m.MessageBox.Action.YES) {
-						sap.ui.getCore().getEventBus().publish("nav", "to", {
-							viewId : "app.persData.personalList"
-						});
-					} else {
 						sap.ui.getCore().getEventBus().publish("nav", "back");
+					} else {
+
 					}
 		});
 	},
